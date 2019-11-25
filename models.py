@@ -4,7 +4,8 @@ from flask_login import UserMixin
 from playhouse.db_url import connect
 
 
-DATABASE = connect(os.environ.get('DATABASE_URL'))
+# DATABASE = connect(os.environ.get('DATABASE_URL'))
+DATABASE = SqliteDatabase('eat.sqlite')
 
 class User(UserMixin, Model):
 	email = CharField(unique=True)
