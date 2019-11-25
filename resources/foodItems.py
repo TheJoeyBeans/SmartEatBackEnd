@@ -61,5 +61,6 @@ def delete_foodItem(id):
 		return jsonify(data={}, status={'code': 401, 'message': 'You must be logged in to create foodItems'})
 	if foodItem_to_delete.creator.id is not current_user.id:
 		return jsonify(data={}, status={'code': 401, 'message': 'You can only delete foodItems you made'})
-	foodItem_to_delete.delete()
+	query = foodItem_to_delete.delete().where(models.Food_item.id==id)
+	query.execute()
 	return jsonify(data='resource successfully deleted', status={"code": 200, "message": "resource deleted successfully"})
