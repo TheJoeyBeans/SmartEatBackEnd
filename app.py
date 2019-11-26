@@ -35,13 +35,13 @@ def after_request(response):
 	g.db.close()
 	return response
 
-CORS(meal, origins=['http://localhost:3000', 'https://git.heroku.com/smart-eat-flask-api.git'], supports_credentials=True)
+CORS(meal, origins=['http://localhost:3000', 'https://git.heroku.com/smart-eat.git'], supports_credentials=True)
 app.register_blueprint(meal, url_prefix='/api/v1/meals')
 
-CORS(foodItem, origins=['http://localhost:3000', 'https://git.heroku.com/smart-eat-flask-api.git'], supports_credentials=True)
+CORS(foodItem, origins=['http://localhost:3000', 'https://git.heroku.com/smart-eat.git'], supports_credentials=True)
 app.register_blueprint(foodItem, url_prefix='/api/v1/foodItems')
 
-CORS(user, origins=['http://localhost:3000', 'https://git.heroku.com/smart-eat-flask-api.git'], supports_credentials=True)
+CORS(user, origins=['http://localhost:3000', 'https://git.heroku.com/smart-eat.git'], supports_credentials=True)
 app.register_blueprint(user, url_prefix='/api/v1/user')
 
 if 'ON_HEROKU' in os.environ:
