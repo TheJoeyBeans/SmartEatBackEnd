@@ -56,5 +56,9 @@ def create_meal():
 @meal.route('/<id>/', methods=["DELETE"])
 def delete_meal(id):
 	meal_to_delete = models.Meal.get(id=id)
-	meal_to_delete.delete()
+	print(model_to_dict(meal_to_delete))
+	query = meal_to_delete.delete().where(models.Meal.id==id)
+	query.execute()
 	return jsonify(data='resource successfully deleted', status={"code": 200, "message": "resource deleted successfully"})
+
+
