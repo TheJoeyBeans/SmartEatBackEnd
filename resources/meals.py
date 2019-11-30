@@ -42,6 +42,7 @@ def updated_meal(id):
 @meal.route('/', methods=['POST'])
 def create_meal():
 	payload = request.get_json()
+	print(payload, "this is payload")
 	if not current_user.is_authenticated:
 		return jsonify(data={}, status={'code': 401, 'message': 'You must be logged in to create a meal'})
 	

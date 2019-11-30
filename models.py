@@ -4,8 +4,8 @@ from flask_login import UserMixin
 from playhouse.db_url import connect
 
 
-DATABASE = connect(os.environ.get('DATABASE_URL'))
-# DATABASE = SqliteDatabase('eat.sqlite')
+# DATABASE = connect(os.environ.get('DATABASE_URL'))
+DATABASE = SqliteDatabase('eat.sqlite')
 
 class User(UserMixin, Model):
 	email = CharField(unique=True)
@@ -25,6 +25,7 @@ class Meal(Model):
 	meal_type = CharField()
 	calories = IntegerField()
 	creator = ForeignKeyField(User, related_name='meals')
+	date_created = DateField()
 
 	class Meta: 
 		db_table = 'meals'
