@@ -25,7 +25,7 @@ class Meal(Model):
 	meal_type = CharField()
 	calories = IntegerField()
 	creator = ForeignKeyField(User, related_name='meals')
-	date_created = DateField()
+	date_created = CharField()
 
 	class Meta: 
 		db_table = 'meals'
