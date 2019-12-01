@@ -20,21 +20,13 @@ def get_all_meals():
 @meal.route('/<id>/', methods=['PUT'])
 def updated_meal(id):
 	payload = request.get_json()
-	meal_to_update = models.Meal.get(id=id)
+	query = models.Meal.update(**payload).where(models.Meal.id==id)
 
 	if not current_user.is_authenticated:
 		return jsonify(data={}, status={'code': 401, 'message': 'You must be logged in to edit a meal'})
 
-	if meal_to_update.creator.id is not current_user.id:
-		return jsonify(data={}, status={'code': 401, 'message': 'You can only update meals you made'})
-
-	meal_to_update.update(
-		meal_type=payload['meal_type'],
-		calories=payload['calories']
-	).execute()
-
-	update_meal_dict = model_to_dict(meal_to_update, max_depth=0)
-	return jsonify(status={'code': 200, 'msg': 'success'}, data=update_meal_dict)
+	query.execute()
+	return jsonify( data=model_to_dict(models.Meal.get_by_id(id)), status={'code': 200, 'msg': 'success'})
 
 
 

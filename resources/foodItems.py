@@ -15,35 +15,23 @@ def get_all_foodItems():
 		return jsonify(data={}, status={"code": 401, "message": "Error getting the resources"})
 
 
-
-
 @foodItem.route('/<id>/', methods=['PUT'])
 def updated_foodItem(id):
 	payload = request.get_json()
-	foodItem_to_update = models.Food_item.get(id=id)
+	query = models.Meal.update(**payload).where(models.Food_items.id==id)
 
 	if not current_user.is_authenticated:
 		return jsonify(data={}, status={'code': 401, 'message': 'You must be logged in to edit foodItems'})
 
-	if foodItem_to_update.creator.id is not current_user.id:
-		return jsonify(data={}, status={'code': 401, 'message': 'You can only update foodItems you made'})
-
-	foodItem_to_update.update(
-		food_name=payload['food_name'],
-		food_calories=payload['food_calories']
-	).execute()
-
-	update_foodItem_dict = model_to_dict(foodItem_to_update, max_depth=0)
-	return jsonify(status={'code': 200, 'msg': 'success'}, data=update_foodItem_dict)
-
-
+	query.execute()
+	return jsonify( data=model_to_dict(models.Food_items.get_by_id(id)), status={'code': 200, 'msg': 'success'})
 
 
 @foodItem.route('/', methods=['POST'])
 def create_foodItem():
 	payload = request.get_json()
 	if not current_user.is_authenticated:
-		return jsonify(data={}, status={'code': 401, 'message': 'You must be logged in to create a dog'})
+		return jsonify(data={}, status={'code': 401, 'message': 'You must be logged in to create a foodItem'})
 
 	payload['creator'] = current_user.id
 	foodItem = models.Food_item.create(**payload)
