@@ -15,16 +15,30 @@ def get_all_foodItems():
 		return jsonify(data={}, status={"code": 401, "message": "Error getting the resources"})
 
 
+# @meal.route('/<id>/', methods=['PUT'])
+# def updated_meal(id):
+# 	payload = request.get_json()
+# 	query = models.Meal.update(**payload).where(models.Meal.id==id)
+
+# 	if not current_user.is_authenticated:
+# 		return jsonify(data={}, status={'code': 401, 'message': 'You must be logged in to edit a meal'})
+
+# 	query.execute()
+# 	return jsonify( data=model_to_dict(models.Meal.get_by_id(id)), status={'code': 200, 'msg': 'success'})
+
+
 @foodItem.route('/<id>/', methods=['PUT'])
 def updated_foodItem(id):
 	payload = request.get_json()
-	query = models.Meal.update(**payload).where(models.Food_items.id==id)
+	query = models.Food_item.update(**payload).where(models.Food_item.id==id)
 
 	if not current_user.is_authenticated:
 		return jsonify(data={}, status={'code': 401, 'message': 'You must be logged in to edit foodItems'})
 
 	query.execute()
-	return jsonify( data=model_to_dict(models.Food_items.get_by_id(id)), status={'code': 200, 'msg': 'success'})
+	return jsonify(status={'code': 200, 'msg': 'success'}, data=model_to_dict(models.Food_item.get_by_id(id)))
+
+
 
 
 @foodItem.route('/', methods=['POST'])
