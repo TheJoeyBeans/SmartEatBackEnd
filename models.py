@@ -3,9 +3,10 @@ from peewee import *
 from flask_login import UserMixin
 from playhouse.db_url import connect
 
-
-DATABASE = connect(os.environ.get('DATABASE_URL'))
-# DATABASE = SqliteDatabase('eat.sqlite')
+if 'ON_HEROKU' in os.environ:
+	DATABASE = connect(os.environ.get('DATABASE_URL'))
+else:
+	DATABASE = SqliteDatabase('eat.sqlite')
 
 class User(UserMixin, Model):
 	email = CharField(unique=True)
@@ -36,7 +37,7 @@ class Food_item(Model):
 	food_name = CharField()
 	food_calories = IntegerField()
 	food_unique_id = CharField()
-	meal = ForeignKeyField(Meal, backref='food_items')
+	meal = ForeignKeyField(Meal, backref='food_items', on_delete='CASCADE')
 	creator = ForeignKeyField(User, related_name='FoodItems')
 
 	class Meta:
