@@ -5,6 +5,7 @@ from flask_login import current_user, login_required
 
 foodItem = Blueprint('foodItems', 'foodItem')
 
+# GET ROUTE FOR FOOD ITEMS
 @foodItem.route('/', methods=['GET'])
 def get_all_foodItems():
 	try:
@@ -15,18 +16,7 @@ def get_all_foodItems():
 		return jsonify(data={}, status={"code": 401, "message": "Error getting the resources"})
 
 
-# @meal.route('/<id>/', methods=['PUT'])
-# def updated_meal(id):
-# 	payload = request.get_json()
-# 	query = models.Meal.update(**payload).where(models.Meal.id==id)
-
-# 	if not current_user.is_authenticated:
-# 		return jsonify(data={}, status={'code': 401, 'message': 'You must be logged in to edit a meal'})
-
-# 	query.execute()
-# 	return jsonify( data=model_to_dict(models.Meal.get_by_id(id)), status={'code': 200, 'msg': 'success'})
-
-
+# EDIT ROUTE FOR FOOD ITEMS
 @foodItem.route('/<id>/', methods=['PUT'])
 def updated_foodItem(id):
 	payload = request.get_json()
@@ -40,7 +30,7 @@ def updated_foodItem(id):
 
 
 
-
+# CREATE ROUTE FOR FOODITEMS
 @foodItem.route('/', methods=['POST'])
 def create_foodItem():
 	payload = request.get_json()
@@ -53,7 +43,7 @@ def create_foodItem():
 	return jsonify(data=foodItem_dict, status={"code": 201, "message": "Success"})
 
 
-
+# DELETE ROUTE FOR FOODITEMS
 @foodItem.route('/<id>/', methods=["DELETE"])
 def delete_foodItem(id):
 

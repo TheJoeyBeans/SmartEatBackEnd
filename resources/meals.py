@@ -5,6 +5,8 @@ from flask_login import current_user, login_required
 
 meal = Blueprint('meals', 'meal')
 
+
+# GET ROUTE FOR MEALS
 @meal.route('/', methods=["GET"])
 def get_all_meals():
 	try:
@@ -16,7 +18,7 @@ def get_all_meals():
 
 
 
-
+# EDIT ROUTE FOR MEALS
 @meal.route('/<id>/', methods=['PUT'])
 def updated_meal(id):
 	payload = request.get_json()
@@ -30,7 +32,7 @@ def updated_meal(id):
 
 
 
-
+# CREATE ROUTE FOR MEALS
 @meal.route('/', methods=['POST'])
 def create_meal():
 	payload = request.get_json()
@@ -44,7 +46,7 @@ def create_meal():
 	return jsonify(data=meal_dict, status={"code": 201, "message": "Success"})
 
 
-
+# DELETE ROUTE FOR MEALS
 
 @meal.route('/<id>/', methods=["DELETE"])
 def delete_meal(id):

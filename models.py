@@ -31,6 +31,7 @@ class Meal(Model):
 		db_table = 'meals'
 		database = DATABASE
 
+# FoodItems are connected to both a user and meal 
 class Food_item(Model):
 	food_name = CharField()
 	food_calories = IntegerField()

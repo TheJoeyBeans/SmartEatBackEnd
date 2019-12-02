@@ -6,6 +6,7 @@ from playhouse.shortcuts import model_to_dict
 
 user = Blueprint('users', 'user')
 
+# CREATE ROUTE FOR USERS
 @user.route('/register', methods=['POST'])
 def register():
 	payload = request.get_json()
@@ -28,6 +29,7 @@ def register():
 
 		return jsonify(data=user_dict, status={'code': 201, 'message': 'User created'})
 
+# LOGIN ROUTE FOR USERS
 @user.route('/login', methods=['POST'])
 def login():
 
